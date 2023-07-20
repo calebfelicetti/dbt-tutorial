@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: customer_orders
+    description: aggregation of customer order data
+    columns:
+      - name: customer_id
+        descrption: primary key
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_customers
+    description: creates a table with customer data
+    columns:
+      - name: id
+        description: primary key
+        tests:
+          - unique
+          - not_null
+
+  - name: stg_orders
+    description: creates a table with order data
+    columns:
+      - name: id
+        description: primary key
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: secondary key
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: id
